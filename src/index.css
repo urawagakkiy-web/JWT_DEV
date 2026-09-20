@@ -251,3 +251,99 @@ input:focus-visible {
   color: var(--ink-weak);
   font-size: 0.85rem;
 }
+
+/* ===== 物件の登録・編集 ===== */
+
+.add {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.panel {
+  margin-top: 16px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.panel-title {
+  margin: 0 0 16px;
+  font-size: 1rem;
+}
+
+.property-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 画面が広いときは2列、狭いときは1列に折り返す */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.form-actions .primary {
+  flex: 1;
+}
+
+/* 主要操作ではないボタン（取消・編集） */
+.ghost {
+  min-height: 48px;
+  padding: 0 20px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+/* 取り消せない操作（削除） */
+.danger {
+  min-height: 48px;
+  padding: 0 20px;
+  color: var(--danger);
+  background: var(--surface);
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.ghost:disabled,
+.danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.card-actions .ghost,
+.card-actions .danger {
+  flex: 1;
+  min-height: 44px;
+  padding: 0 12px;
+  font-size: 0.9rem;
+}
+
+.empty {
+  margin-top: 24px;
+  padding: 32px 16px;
+  color: var(--ink-weak);
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+}

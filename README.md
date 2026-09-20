@@ -64,6 +64,27 @@ npm run build    # 本番ビルド（dist/ に出力）
 npm run preview  # ビルド結果の確認
 ```
 
+## データベース（最初に1回だけ）
+
+物件データは Supabase の `properties` テーブルに保存する。
+**[supabase/schema.sql](supabase/schema.sql) の内容を、ダッシュボードの SQL Editor に貼り付けて実行する。**
+これをやらないと一覧画面に「物件テーブルがまだありません」と表示される。
+
+| 列 | 型 | 内容 |
+|---|---|---|
+| `id` | uuid | 主キー（自動採番） |
+| `user_id` | uuid | 登録したユーザー。既定値が `auth.uid()` なのでアプリからは送らない |
+| `name` | text | 物件名 |
+| `rent` | integer | 家賃（円）。0以上 |
+| `area` | text | エリア名 |
+| `layout` | text | 間取り（例: 1LDK） |
+| `created_at` / `updated_at` | timestamptz | 作成・更新日時（`updated_at` はトリガーで自動更新） |
+
+RLS を有効にし、SELECT / INSERT / UPDATE / DELETE の4つに
+「`auth.uid() = user_id` の行だけ」というポリシーを設定している。
+**他人の物件は取得すらできない**ので、アプリ側で絞り込む必要はない。
+同じ SQL を何度実行しても壊れないように書いてある。
+
 ## Supabase 側の設定
 
 1. プロジェクトを作成する
@@ -81,24 +102,26 @@ real-estate-app/
 ├── vite.config.js
 ├── .env                    # 接続情報（Git管理外）
 ├── .env.example            # .env のひな形
+├── supabase/
+│   └── schema.sql          # テーブル定義とRLSポリシー
 └── src/
     ├── main.jsx            # 起動
     ├── App.jsx             # ルーティング
     ├── supabaseClient.js   # Supabaseクライアントの生成
-    ├── authError.js        # Supabaseのエラーを日本語にする
+    ├── authError.js        # 認証エラーを日本語にする
+    ├── format.js           # 家賃の表示整形
+    ├── api/
+    │   ├── properties.js   # 物件のCRUD（SELECT/INSERT/UPDATE/DELETE）
+    │   └── dbError.js      # DBエラーを日本語にする
     ├── index.css           # 見た目。色は :root の変数に集約
     ├── components/
     │   ├── AuthProvider.jsx    # ログイン状態をアプリ全体で共有
     │   ├── ProtectedRoute.jsx  # 未ログインならログイン画面へ
     │   ├── ConfigNotice.jsx    # .env 未設定の案内
-    │   └── PropertyCard.jsx    # 物件カード1件分
-    ├── pages/
-    │   ├── Login.jsx
-    │   ├── SignUp.jsx
-    │   └── PropertyList.jsx
-    └── data/
-        └── properties.js   # ダミーの物件データ
+    │   ├── PropertyForm.jsx    # 登録・編集で共用するフォーム
+    │   └── PropertyCard.jsx    # 物件カード（編集・削除ボタンつき）
+    └── pages/
+        ├── Login.jsx
+        ├── SignUp.jsx
+        └── PropertyList.jsx    # 一覧・登録・編集・削除の取りまとめ
 ```
-
-物件を Supabase のテーブルから取るようにするときは、`src/data/properties.js` の
-`PROPERTIES` を取得結果に差し替える。件数表示はデータから数えているので追従する。
