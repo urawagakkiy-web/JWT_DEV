@@ -4,9 +4,77 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>不動産管理アプリ</title>
+    <style>
+      /* ここのCSSは「開発サーバーなしで開かれたとき」の案内専用。
+         アプリ本体の見た目は src/index.css が持つ（起動後に読み込まれる）。 */
+      body {
+        margin: 0;
+        font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+        line-height: 1.8;
+      }
+      #setup-help {
+        max-width: 640px;
+        margin: 48px auto;
+        padding: 24px;
+        border: 1px solid #dde3e8;
+        border-radius: 12px;
+        background: #fff6e0;
+        color: #4a3b12;
+      }
+      #setup-help h1 {
+        margin: 0 0 12px;
+        font-size: 1.25rem;
+      }
+      #setup-help code,
+      #setup-help pre {
+        font-family: "SF Mono", Menlo, monospace;
+      }
+      #setup-help pre {
+        padding: 12px;
+        overflow-x: auto;
+        background: #fff;
+        border-radius: 8px;
+      }
+      #setup-help ol {
+        padding-left: 1.2em;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- 開発サーバーを通さずに開かれたときだけ表示する案内。
+         通常起動時は React が #root を描画するので、下の script が表示しない。 -->
+    <div id="setup-help" hidden>
+      <h1>このファイルは直接開いても動きません</h1>
+      <p>
+        このアプリは Vite でビルドして動かす構成のため、<code>index.html</code>
+        をダブルクリックしても画面は出ません（JSX の変換と依存ライブラリの解決を開発サーバーが行うため）。
+      </p>
+      <p><strong>起動のしかた（どちらか）</strong></p>
+      <ol>
+        <li>
+          同じフォルダにある <code>起動.command</code> をダブルクリックする（おすすめ）
+        </li>
+        <li>
+          ターミナルでこのフォルダに移動して、次を実行する
+          <pre>npm install
+npm run dev</pre>
+          表示された <code>http://localhost:5173/</code> をブラウザで開く
+        </li>
+      </ol>
+    </div>
+
+    <script>
+      // React が #root を描画できたかを少し待ってから確認する。
+      // 描画されていなければ開発サーバーを通していないので、案内を出す。
+      setTimeout(function () {
+        if (!document.getElementById("root").hasChildNodes()) {
+          document.getElementById("setup-help").hidden = false;
+        }
+      }, 1500);
+    </script>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
