@@ -92,7 +92,7 @@ input:focus-visible {
 
 .primary:disabled {
   opacity: 0.6;
-  cursor: progress;
+  cursor: not-allowed;
 }
 
 .auth-switch {

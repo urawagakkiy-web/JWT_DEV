@@ -7,7 +7,15 @@ const MESSAGES = [
   { match: "Password should be at least", text: "パスワードが短すぎます。6文字以上で入力してください。" },
   { match: "Unable to validate email address", text: "メールアドレスの形式が正しくありません。" },
   { match: "For security purposes", text: "短時間に試行しすぎました。少し待ってからもう一度お試しください。" },
-  { match: "Failed to fetch", text: "Supabase に接続できません。.env の設定とネット接続を確認してください。" },
+  {
+    match: "Failed to fetch",
+    text:
+      "Supabase に接続できませんでした。次のどれかが原因です。" +
+      "(1) .env の VITE_SUPABASE_URL が間違っている（実在しないホスト名）" +
+      " / (2) .env を変更したあと開発サーバーを再起動していない" +
+      " / (3) Supabase のプロジェクトが停止（Paused）している" +
+      " / (4) ネットワークに繋がっていない。",
+  },
 ];
 
 export function toJapaneseAuthError(error) {

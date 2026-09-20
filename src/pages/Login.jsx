@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { supabase } from "../supabaseClient";
+import { supabase, supabaseConfigured, configProblem } from "../supabaseClient";
 import { useAuth } from "../components/AuthProvider";
 import { ConfigNotice } from "../components/ConfigNotice";
 import { toJapaneseAuthError } from "../authError";
@@ -22,6 +22,14 @@ export function Login() {
   async function signIn(event) {
     event.preventDefault();
     setErrorMessage("");
+
+    // 接続先が未設定のまま送信すると、存在しないホストへ通信しにいって
+    // 「接続できません」という分かりにくいエラーになる。先に理由を出して止める。
+    if (!supabaseConfigured) {
+      setErrorMessage(configProblem);
+      return;
+    }
+
     setSubmitting(true);
 
     const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -73,7 +81,7 @@ export function Login() {
           </p>
         )}
 
-        <button type="submit" className="primary" disabled={submitting}>
+        <button type="submit" className="primary" disabled={submitting || !supabaseConfigured}>
           {submitting ? "ログイン中…" : "ログイン"}
         </button>
       </form>
