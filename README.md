@@ -5,6 +5,13 @@ Supabase の認証（メールアドレス＋パスワード）つきの不動�
 
 リポジトリ: https://github.com/urawagakkiy-web/JWT_DEV
 
+## ドキュメント
+
+| 資料 | 内容 |
+|---|---|
+| [設計書](docs/設計書.md) | 画面・データ・セキュリティ・機能の設計 |
+| [環境構築書](docs/環境構築書.md) | ゼロから動かすまでの手順とトラブル対処 |
+
 ## 画面
 
 | パス | 画面 | ログイン |
@@ -135,6 +142,9 @@ Vercel の **Settings → Environment Variables** に次の2つを登録する�
 ```
 real-estate-app/
 ├── 起動.command            # ダブルクリックで開発サーバーを起動する
+├── docs/
+│   ├── 設計書.md
+│   └── 環境構築書.md
 ├── vercel.json             # Vercel用。全URLをindex.htmlに向ける
 ├── index.html              # Viteのエントリ（直接開いても動かない）
 ├── vite.config.js
