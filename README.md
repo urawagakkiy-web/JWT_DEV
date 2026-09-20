@@ -3,6 +3,8 @@
 Supabase の認証（メールアドレス＋パスワード）つきの不動産管理Webアプリ。
 ログインすると物件一覧（ダミーデータ）が見られる。
 
+リポジトリ: https://github.com/urawagakkiy-web/JWT_DEV
+
 ## 画面
 
 | パス | 画面 | ログイン |
