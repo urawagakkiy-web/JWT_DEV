@@ -93,11 +93,49 @@ RLS を有効にし、SELECT / INSERT / UPDATE / DELETE の4つに
    - オンのままだと、会員登録後に確認メールのリンクを開くまでログインできない
    - アプリ側はどちらの設定でも動く（確認が必要なときは案内を表示する）
 
+## デプロイ（Vercel）
+
+リポジトリ（JWT_DEV）を Vercel に Import すると、Vite として自動認識される
+（ビルド `npm run build` / 出力 `dist`）。設定を足す必要があるのは次の2点。
+
+### 1. ルーティング（`vercel.json`）
+
+このアプリは React Router で `/login` `/signup` を扱っているが、
+ビルド結果は `index.html` と `assets/` だけで、`/login` に対応するファイルは存在しない。
+そのままだと `/login` を直接開いたときやリロード時に **404** になる。
+
+[vercel.json](vercel.json) で、どのURLでも `index.html` を返すようにしている。
+
+```json
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
+```
+
+`assets/` の中身は実ファイルとして存在するため、
+Vercel は先にファイルを探してから rewrite を適用する。JS や CSS が巻き込まれることはない。
+
+### 2. 環境変数（Vercelダッシュボード）
+
+`.env` は Git 管理外なのでリポジトリには含まれない。**vercel.json にも書かない。**
+Vercel の **Settings → Environment Variables** に次の2つを登録する。
+
+| 名前 | 値 |
+|---|---|
+| `VITE_SUPABASE_URL` | Supabase の Project URL |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Supabase の Publishable key |
+
+**`VITE_` の変数はビルド時に埋め込まれる。** 値を変えたら再デプロイしないと反映されない。
+未設定のままデプロイすると、画面に「接続情報がひな形の値のままです」と表示される。
+
+なお `service_role` キーはブラウザに配布されるため、ここに登録してはいけない。
+
 ## ファイル構成
 
 ```
 real-estate-app/
 ├── 起動.command            # ダブルクリックで開発サーバーを起動する
+├── vercel.json             # Vercel用。全URLをindex.htmlに向ける
 ├── index.html              # Viteのエントリ（直接開いても動かない）
 ├── vite.config.js
 ├── .env                    # 接続情報（Git管理外）
