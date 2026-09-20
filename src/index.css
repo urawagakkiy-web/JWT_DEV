@@ -1,0 +1,253 @@
+/* テーマは :root の変数だけで決まる。個々のセレクタに色を直書きしない */
+:root {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --ink: #1f2933;
+  --ink-weak: #6b7684;
+  --accent: #1b5e8c;
+  --accent-ink: #ffffff;
+  --border: #dde3e8;
+  --danger: #b3261e;
+  --notice-bg: #fff6e0;
+  --notice-ink: #7a5200;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  line-height: 1.7;
+}
+
+/* ===== ログイン・会員登録 ===== */
+
+.auth {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 48px 16px;
+}
+
+.auth-title {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+}
+
+.auth-lead {
+  margin: 0 0 24px;
+  color: var(--ink-weak);
+  font-size: 0.95rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 0.85rem;
+  color: var(--ink-weak);
+}
+
+input {
+  padding: 12px;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ボタンはタップしやすい高さを確保する */
+.primary {
+  min-height: 48px;
+  font-size: 1rem;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.primary:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.auth-switch a {
+  color: var(--accent);
+}
+
+/* ===== メッセージ ===== */
+
+/* エラーは色だけでなく先頭の記号でも分かるようにする */
+.error {
+  margin: 0;
+  color: var(--danger);
+  font-size: 0.9rem;
+}
+
+.error::before {
+  content: "× ";
+}
+
+.info {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.info::before {
+  content: "○ ";
+}
+
+.notice {
+  margin: 0 0 20px;
+  padding: 12px;
+  color: var(--notice-ink);
+  background: var(--notice-bg);
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.notice code {
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.loading {
+  padding: 48px 16px;
+  color: var(--ink-weak);
+  text-align: center;
+}
+
+/* ===== 物件一覧 ===== */
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  color: var(--accent-ink);
+  background: var(--accent);
+}
+
+.logo {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.header-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.user {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  word-break: break-all;
+}
+
+.logout {
+  min-height: 40px;
+  padding: 0 16px;
+  color: var(--accent-ink);
+  background: transparent;
+  border: 1px solid var(--accent-ink);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.main-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.count {
+  margin: 0;
+  color: var(--ink-weak);
+  font-size: 0.9rem;
+}
+
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.card-name {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.card-rent {
+  margin: 0 0 4px;
+  color: var(--accent);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.card-area {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.card-detail {
+  margin: 4px 0 0;
+  color: var(--ink-weak);
+  font-size: 0.85rem;
+}

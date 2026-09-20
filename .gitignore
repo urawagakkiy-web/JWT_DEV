@@ -1,0 +1,20 @@
+# 依存パッケージ
+node_modules/
+
+# ビルド成果物
+dist/
+
+# 環境変数（Supabaseの接続情報などの秘密情報）
+.env
+.env.local
+.env.*.local
+
+# macOS
+.DS_Store
+
+# エディタ
+.vscode/
+.idea/
+
+# ログ
+*.log
